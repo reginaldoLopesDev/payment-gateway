@@ -42,6 +42,10 @@ func (c *CreditCard) IsValid() error {
 	if err != nil {
 		return err
 	}
+	err = c.validateCVV()
+	if err != nil {
+		return err
+	}
 	return nil
 }
 func (c *CreditCard) validateNumber() error {
@@ -63,4 +67,11 @@ func (c *CreditCard) validateYear() error {
 		return nil
 	}
 	return errors.New("invalid expiration year")
+}
+
+func (c *CreditCard) validateCVV() error {
+	if c.cvv >= 100 && c.cvv <= 999 {
+		return nil
+	}
+	return errors.New("invalid cvv")
 }
